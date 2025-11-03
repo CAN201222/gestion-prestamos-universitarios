@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h3>Registro de Nuevo Usuario</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+          
+          <div class="alert alert-danger" *ngIf="error">
+            <div *ngFor="let err of error | keyvalue">
+              <strong>{{ err.key }}:</strong> {{ err.value[0] }}
+            </div>
+          </div>
+           <div class="alert alert-success" *ngIf="success">
+            ¡Registro exitoso! Serás redirigido al Login.
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="username" class="form-label">Usuario *</label>
+                <input type="text" class="form-control" formControlName="username"
+                [ngClass]="{ 'is-invalid': f['username'].touched && f['username'].errors }">
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña *</label>
+                <input type="password" class="form-control" formControlName="password"
+                       [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].errors }">
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" class="form-control" formControlName="email"
+                       [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].errors }">
+              </div>
+
+              <div class="mb-3">
+                <label for="tipo_usuario" class="form-label">Tipo de Usuario *</label>
+                <select class="form-select" formControlName="tipo_usuario">
+                  <option value="estudiante">Estudiante</option>
+                  <option value="profesor">Profesor</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="first_name" class="form-label">Nombres</label>
+                <input type="text" class="form-control" formControlName="first_name">
+              </div>
+              
+              <div class="mb-3">
+                <label for="last_name" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" formControlName="last_name">
+              </div>
+
+              <div class="mb-3">
+                <label for="matricula" class="form-label">Matrícula</label>
+                <input type="text" class="form-control" formControlName="matricula">
+              </div>
+              
+              <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" formControlName="telefono">
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary w-100" [disabled]="registroForm.invalid || loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+            {{ loading ? 'Registrando...' : 'Registrarse' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

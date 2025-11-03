@@ -1,0 +1,53 @@
+<p>lista-prestamos works!</p>
+<h3>Mis Préstamos</h3>
+<p>Aquí puedes ver el historial de tus préstamos.</p>
+
+<a class="btn btn-success mb-3" routerLink="/prestamos/nuevo">
+  Solicitar Nuevo Préstamo
+</a>
+
+<div *ngIf="prestamos$ | async as prestamos; else loading">
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Libro</th>
+        <th>Fecha Préstamo</th>
+        <th>Devolución Prevista</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of prestamos">
+        <td>{{ p.libro_titulo || p.libro }}</td>
+        <td>{{ p.fecha_prestamo | date:'short' }}</td>
+        <td>{{ p.fecha_devolucion_prevista | date:'shortDate' }}</td>
+        <td>
+          <span class="badge" [ngClass]="{
+            'bg-success': p.estado === 'activo',
+            'bg-secondary': p.estado === 'devuelto',
+            'bg-danger': p.estado === 'vencido'
+          }">
+            {{ p.estado | titlecase }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-info" 
+                  *ngIf="p.estado === 'activo' || p.estado === 'vencido'"
+                  (click)="onDevolver(p.id)">
+            Devolver
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="prestamos.length === 0">No tienes préstamos registrados.</p>
+</div>
+
+<ng-template #loading>
+  <div class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input formControlName="titulo" placeholder="Título" />
+  <input formControlName="autor" placeholder="Autor" />
+  <input formControlName="isbn" placeholder="ISBN" />
+  <input formControlName="editorial" placeholder="Editorial" />
+  <input type="number" formControlName="año_publicacion" />
+  <input type="number" formControlName="stock" />
+  <button type="submit" [disabled]="loading">Crear Libro</button>
+  <div *ngIf="error">{{error}}</div>
+  <div *ngIf="success">Libro creado</div>
+</form>

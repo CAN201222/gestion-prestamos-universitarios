@@ -1,0 +1,42 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Iniciar Sesión</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Usuario</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          class="form-control"
+          [class.is-invalid]="f['username'].touched && f['username'].invalid"
+        />
+        <div *ngIf="f['username'].touched && f['username'].invalid" class="invalid-feedback">
+          <div *ngIf="f['username'].errors?.['required']">El usuario es requerido</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="f['password'].touched && f['password'].invalid"
+        />
+        <div *ngIf="f['password'].touched && f['password'].invalid" class="invalid-feedback">
+          <div *ngIf="f['password'].errors?.['required']">La contraseña es requerida</div>
+        </div>
+      </div>
+
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        {{ loading ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
+      </button>
+    </form>
+  </div>
+</div>
